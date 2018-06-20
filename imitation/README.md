@@ -12,6 +12,7 @@ How to run data collection:
 ```
 python collect_simple.py --num_episodes 10 --render test_10.npz
 ```
+I collected dataset of 600 episodes for training and 100 episodes for validation. The dataset can be downloaded from [here](https://github.com/tambetm/pommerman-baselines/releases/tag/simple_600K).
 
 ## Model training
 
@@ -30,11 +31,12 @@ How to run evaluation:
 ```
 python eval_model.py --num_episodes 4 --render conv256.h5
 ```
+**NB!** `--num_episodes` should be divisible by 4, because the agent is evaluated at each of the four positions.
 
 ## Results
 
 | Model | Avg. reward | Avg. length |  Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
-| --- | --- | --- | --- | --- | --- | --- |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | SimpleAgent | -0.61 | 258 | | | | |
 | StopAgent | -0.85 | 291 | | | |
 | [Linear](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/linear.h5) | -0.905 | 110 | 0.363 | -0.006 | 0.393 | 0.013 |
