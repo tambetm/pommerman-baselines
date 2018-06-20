@@ -221,6 +221,8 @@ if __name__ == "__main__":
     parser.add_argument('--temperature', type=float, default=0)
     args = parser.parse_args()
 
+    assert args.num_episodes % args.num_runners == 0, "The number of episodes should be divisible by number of runners"
+
     # use spawn method for starting subprocesses
     ctx = multiprocessing.get_context('spawn')
 

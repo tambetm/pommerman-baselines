@@ -98,6 +98,8 @@ if __name__ == "__main__":
     parser.add_argument('--render', action='store_true', default=False)
     args = parser.parse_args()
 
+    assert args.num_episodes % 4 == 0, "The number of episodes should be divisible by 4"
+
     # make sure TF does not allocate all memory
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
