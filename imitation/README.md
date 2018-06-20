@@ -35,6 +35,8 @@ python eval_model.py --num_episodes 4 --render conv256.h5
 
 | Model | Avg. reward | Avg. length |  Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
 | --- | --- | --- | --- | --- | --- | --- |
+| SimpleAgent | -0.61 | 258 | | | | |
+| StopAgent | -0.85 | 291 | | | |
 | [Linear](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/linear.h5) | -0.905 | 110 | 0.363 | -0.006 | 0.393 | 0.013 |
 | [Fully connected](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/dense.h5) | -0.94 | 157 | 0.392 | | 0.400 | |
 | [Conv](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/conv.h5) | -0.755 | 262 | 0.630 | -0.391 | 0.661 | 0.883 |
@@ -49,6 +51,8 @@ The columns of the table:
 * **Val. exp. var.** - validation set explained variance of value prediction.
 * **Train. acc.** - training set accuracy of action prediction.
 * **Train. exp. var.** - training set explained variance of value prediction.
+
+Two first models are baselines - SimpleAgent playing against itself and StopAgent which always takes Stop action. The best models are pretty close to SimpleAgent performance, which they tried to imitate. Action prediction accuracy 100% is impossible to achieve because SimpleAgent chooses some of the actions randomly.
 
 Some of the models were trained without value head by setting its loss weight to zero, for those the explained variance is not reported. Not too much effort was spent on tuning hyperparameters, you are welcome to submit better models (with appropriate statistics).
 
