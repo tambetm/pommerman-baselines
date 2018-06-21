@@ -28,8 +28,8 @@ Here are some preliminary results that prove effectiveness of MCTS.
 | 600 | -0.206 | 297 | 456 | 50.209 |
 | 700 | -0.188 | 297 | 261 | 60.865 |
 | 800 | -0.147 | 297 | 326 | 71.894 |
-| 900 | -0.175 | 299 | 240 | 83.540 |
-| 1000 | -0.096 | 283 | 363 | 91.446 |
+| 900 | -0.147 | 299 | 265 | 81.209 |
+| 1000 | -0.105 | 288 | 400 | 91.769 |
 
 The columns of the table:
 * **MCTS iterations** - how many MCTS iterations were used per timestep.

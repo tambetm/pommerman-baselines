@@ -58,4 +58,4 @@ Two first models are baselines - SimpleAgent playing against itself and StopAgen
 
 Some of the models were trained without value head by setting its loss weight to zero, for those the explained variance is not reported. Not too much effort was spent on tuning hyperparameters, you are welcome to submit better models (with appropriate statistics).
 
-Clearly the models tend to overfit on value prediction. This can be explained by low number of episodes in training set - there are only 600 episodes. For example this means that there are only 600 different configurations of stone walls. I'm collecting a dataset with one sample per episode which hopefully improves this.
+Clearly the models tend to overfit on value prediction. This can be explained by low number of episodes in the training set - there are only 600 episodes. For example this means that there are only 600 different configurations of stone walls. I'm collecting a dataset with one sample per episode which hopefully improves this.
