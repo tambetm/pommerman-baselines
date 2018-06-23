@@ -6,11 +6,11 @@ This is the code to play against three SimpleAgents using Monte-Carlo Tree Searc
 
 For interactive test:
 ```
-python mcts_agent_nn.py conv256.h5 --mcts_iters 10 --num_episodes 1 --num_runners 1 --render
+python mcts_nn_agent.py conv256.h5 --mcts_iters 10 --num_episodes 1 --num_runners 1 --render
 ```
 For gathering statistics:
 ```
-python mcts_agent_nn.py conv256.h5 --mcts_iters 100 --num_episodes 400 --num_runners 16
+python mcts_nn_agent.py conv256.h5 --mcts_iters 100 --num_episodes 400 --num_runners 16
 ```
 **NB!** `--num_runners` should be the number of cores you have and divisible with 4 (each process evaluates agent at specific position). `--num_episodes` should be divisible by `--num_runners`. I needed at least 400 episodes to get reliable average reward.
 
