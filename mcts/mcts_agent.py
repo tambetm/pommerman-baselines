@@ -184,6 +184,12 @@ def runner(id, num_episodes, fifo, _args):
         fifo.put((length, reward, rewards, agent_id, elapsed))
 
 
+def profile_runner(id, num_episodes, fifo, _args):
+    import cProfile
+    command = """runner(id, num_episodes, fifo, _args)"""
+    cProfile.runctx(command, globals(), locals(), filename=_args.profile)
+
+
 def logger(fifo):
     all_rewards = []
     all_lengths = []
@@ -219,6 +225,8 @@ if __name__ == "__main__":
     # RL params
     parser.add_argument('--discount', type=float, default=0.99)
     parser.add_argument('--temperature', type=float, default=0)
+    # profile
+    parser.add_argument('--profile')
     args = parser.parse_args()
 
     assert args.num_episodes % args.num_runners == 0, "The number of episodes should be divisible by number of runners"
@@ -229,7 +237,7 @@ if __name__ == "__main__":
     # create fifos and processes for all runners
     fifo = ctx.Queue()
     for i in range(args.num_runners):
-        process = ctx.Process(target=runner, args=(i, args.num_episodes // args.num_runners, fifo, args))
+        process = ctx.Process(target=profile_runner if args.profile else runner, args=(i, args.num_episodes // args.num_runners, fifo, args))
         process.start()
 
     # do logging in the main process

@@ -26,12 +26,19 @@ Keras + Tensorflow was used to train the models.
 
 ## Model evaluation
 * `eval_model.py` - evaluates model against three SimpleAgents and reports average reward, average length and time per timestep.
+* `eval_selfplay.py` - evaluates model against itself and reports average reward, average length and time per timestep.
 
-How to run evaluation:
+How to run evaluation against SimpleAgents:
 ```
 python eval_model.py --num_episodes 4 --render conv256.h5
 ```
 **NB!** `--num_episodes` should be divisible by 4, because the agent is evaluated at each of the four positions.
+
+It may be interesting to see how the agent plays against itself:
+```
+python eval_selfplay.py --num_episodes 1 --render conv256.h5
+```
+Self-plays tend to get stuck with agents moving back and forth or not moving at all.
 
 ## Results
 
