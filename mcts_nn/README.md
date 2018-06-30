@@ -20,12 +20,14 @@ python mcts_nn_agent.py conv256.h5 --mcts_iters 100 --num_episodes 400 --num_run
 
 | Model | Avg. reward | Avg. length | Eval. episodes | Time per step (s) |
 | --- | ---: | ---: | ---: | ---: |
+| ***Baselines*** |
 | [Conv256](../imitation#results) | -0.63 | 299 | 400 |  |
 | [MCTS100](../mcts#results) | -0.736 | 187 | 1000 | 6.756 |
 | [MCTS200](../mcts#results) | -0.573 | 230 | 978 | 14.641 |
-| Conv256 + MCTS50 | -0.122 | 554 | 337 | 5.163 |
-| Conv256 + MCTS100 | -0.013 | 555 | 158 | 12.040 |
-| Conv256 + MCTS200 | 0.053 | 576 | 76 | 26.076 |
+| ***MCTS + NN*** |
+| Conv256 + MCTS50 | -0.135 | 562 | 467 | 5.169 |
+| Conv256 + MCTS100 | -0.102 | 573 | 421 | 11.771 |
+| Conv256 + MCTS200 | 0.000 | 559 | 340 | 27.753 |
 
 The columns of the table:
 * **Model** - model used, either only network, only MCTS or combined.
@@ -34,7 +36,7 @@ The columns of the table:
 * **Eval. episodes** - how many episodes were used to calculate previous two.
 * **Time per step (s)** - time per timestep in seconds.
 
-First three rows are baselines from my former [imitation](../imitation) and [MCTS](../mcts) experiments. Next three rows combine those two approaches. Clearly making use on neural network guidance improves MCTS - we have the first positive result against three SimpleAgents!
+First three rows are baselines from my former [imitation](../imitation) and [MCTS](../mcts) experiments. Next three rows combine those two approaches. Clearly making use on neural network guidance improves MCTS - we have the first non-negative result against three SimpleAgents!
 
 ## Performance
 
