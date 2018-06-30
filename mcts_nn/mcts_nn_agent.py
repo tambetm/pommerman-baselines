@@ -18,7 +18,7 @@ NUM_CHANNELS = 18
 
 def argmax_tiebreaking(Q):
     # find the best action with random tie-breaking
-    idx = np.flatnonzero(np.isclose(Q, np.max(Q)))
+    idx = np.flatnonzero(Q == np.max(Q))
     assert len(idx) > 0, str(Q)
     return np.random.choice(idx)
 
@@ -75,6 +75,7 @@ class MCTSAgent(BaseAgent):
     def search(self, root, num_iters, temperature=1):
         # remember current game state
         self.env._init_game_state = root
+        root = str(root)
 
         for i in range(num_iters):
             # restore game state to root node
@@ -129,8 +130,7 @@ class MCTSAgent(BaseAgent):
         self.env.set_json_info()
         self.env._init_game_state = None
         # return action probabilities
-        state = str(root)
-        return self.tree[state].probs(temperature)
+        return self.tree[root].probs(temperature)
 
     def rollout(self):
         # reset search tree in the beginning of each rollout
@@ -241,24 +241,6 @@ def profile_runner(id, num_episodes, fifo, _args):
     cProfile.runctx(command, globals(), locals(), filename=_args.profile)
 
 
-def logger(fifo):
-    all_rewards = []
-    all_lengths = []
-    all_elapsed = []
-    for i in range(args.num_episodes):
-        # wait for a new trajectory
-        length, reward, rewards, agent_id, elapsed = fifo.get()
-
-        print("Episode:", i, "Reward:", reward, "Length:", length, "Rewards:", rewards, "Agent:", agent_id, "Time per step:", elapsed / length)
-        all_rewards.append(reward)
-        all_lengths.append(length)
-        all_elapsed.append(elapsed)
-
-    print("Average reward:", np.mean(all_rewards))
-    print("Average length:", np.mean(all_lengths))
-    print("Time per timestep:", np.sum(all_elapsed) / np.sum(all_lengths))
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('model_file')
@@ -287,4 +269,18 @@ if __name__ == "__main__":
         process.start()
 
     # do logging in the main process
-    logger(fifo)
+    all_rewards = []
+    all_lengths = []
+    all_elapsed = []
+    for i in range(args.num_episodes):
+        # wait for a new trajectory
+        length, reward, rewards, agent_id, elapsed = fifo.get()
+
+        print("Episode:", i, "Reward:", reward, "Length:", length, "Rewards:", rewards, "Agent:", agent_id, "Time per step:", elapsed / length)
+        all_rewards.append(reward)
+        all_lengths.append(length)
+        all_elapsed.append(elapsed)
+
+    print("Average reward:", np.mean(all_rewards))
+    print("Average length:", np.mean(all_lengths))
+    print("Time per timestep:", np.sum(all_elapsed) / np.sum(all_lengths))

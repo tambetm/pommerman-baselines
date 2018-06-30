@@ -4,6 +4,8 @@ This is the code to play against three SimpleAgents using Monte-Carlo Tree Searc
 
 ## Running the code
 
+First download [conv256.h5](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/conv256.h5) and save it in this directory.
+
 For interactive test:
 ```
 python mcts_nn_agent.py conv256.h5 --mcts_iters 10 --num_episodes 1 --num_runners 1 --render
@@ -18,9 +20,9 @@ python mcts_nn_agent.py conv256.h5 --mcts_iters 100 --num_episodes 400 --num_run
 
 | Model | Avg. reward | Avg. length | Eval. episodes | Time per step (s) |
 | --- | ---: | ---: | ---: | ---: |
-| [Conv256](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/conv256.h5) | -0.63 | 299 | 400 |  |
-| MCTS100 | -0.736 | 187 | 1000 | 6.756 |
-| MCTS200 | -0.573 | 230 | 978 | 14.641 |
+| [Conv256](../imitation#results) | -0.63 | 299 | 400 |  |
+| [MCTS100](../mcts#results) | -0.736 | 187 | 1000 | 6.756 |
+| [MCTS200](../mcts#results) | -0.573 | 230 | 978 | 14.641 |
 | Conv256 + MCTS50 | -0.122 | 554 | 337 | 5.163 |
 | Conv256 + MCTS100 | -0.013 | 555 | 158 | 12.040 |
 | Conv256 + MCTS200 | 0.053 | 576 | 76 | 26.076 |
