@@ -68,4 +68,4 @@ These are the results of MCTS + selfplay using network guidance (compare to [MCT
 | Conv256 + MCTS500 self-play (GPU) | 0.215 | 482 | 502 | 7.259 |
 | Conv256 + MCTS1000 self-play (GPU) | 0.358 | 439 | 187 | 15.675 |
 
-Neural network seems to narrow down the branching rate considerably allowing strong positive average rewards. The average rollout length was 10-20. This is promising, but of course step times are nowhere near being usable during evaluation.
+Neural network seems to narrow down the branching rate considerably. Faster rollouts allow for more iterations, which in turn produce strong positive average rewards. The average rollout length was 10-20. Still I find it slightly surprising that MCTS self-play with 100 iterations resulted in better score than MCTS against SimpleAgents with the same number of iterations. But at the same time the network was trained to imitate SimpleAgents, so MCTS rollouts were really played against SimpleAgent-like opponent. Maybe self-play produces slightly more robust moves. In the end this is promising, but of course step times are nowhere near being usable during evaluation.
