@@ -18,7 +18,7 @@ python mcts_selfplay_agent.py conv256.h5 --mcts_iters 100 --num_episodes 400 --n
 
 ## Results without NN
 
-These are the results of vanilla MCTS + selfplay, without network guidance (compare to [normal MCTS](../mcts#results).
+These are the results of vanilla MCTS + selfplay, without network guidance (compare to [normal MCTS](../mcts#results)).
 
 | MCTS iterations | Avg. reward | Avg. length | Eval. episodes | Time per step (s) |
 | --- | ---: | ---: | ---: | ---: |
@@ -56,16 +56,16 @@ Self-play improves performance a lot though. The key is getting rid of really sl
 
 ## Results with NN
 
-These are the results of MCTS + selfplay using network guidance (compare to [MCTS + NN](../mcts_nn#results).
+These are the results of MCTS + selfplay using network guidance (compare to [MCTS + NN](../mcts_nn#results)).
 
 | Model | Avg. reward | Avg. length | Eval. episodes | Time per step (s) |
 | --- | ---: | ---: | ---: | ---: |
-| Baselines |
+| ***Baselines*** |
 | [Conv256 + MCTS100](../mcts_nn#results) | -0.102 | 573 | 421 | 11.771 |
 | [Conv256 + MCTS200](../mcts_nn#results) | 0.000 | 559 | 340 | 27.753 |
-| MCTS self-play |
+| ***MCTS self-play*** |
 | Conv256 + MCTS100 self-play (CPU) | 0.015 | 472 | 400 | 12.219 |
 | Conv256 + MCTS500 self-play (GPU) | 0.215 | 482 | 502 | 7.259 |
 | Conv256 + MCTS1000 self-play (GPU) | 0.358 | 439 | 187 | 15.675 |
 
-Neural network seems to narrow down the branching rate considerably allowing strong positive average rewards. The average rollout length was 10-20. This is promising, but of course steps times are nowhere near being usable during evaluation.
+Neural network seems to narrow down the branching rate considerably allowing strong positive average rewards. The average rollout length was 10-20. This is promising, but of course step times are nowhere near being usable during evaluation.
