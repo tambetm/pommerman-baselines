@@ -2,7 +2,7 @@
 
 Some baselines for Pommerman competition, see subdirectories.
 
-If you use code or ideas from this repository, please cite
+If you use code or ideas from this repository, please cite it as follows:
 ```
 @misc{matiisen2018pommerman,
   author = {Tambet Matiisen},
