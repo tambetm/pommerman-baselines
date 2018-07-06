@@ -106,7 +106,7 @@ cdef class ForwardModel(object):
                    list curr_flames,
                    byte max_blast_strength=10):
         cdef characters.Bomber agent, agent2
-        cdef characters.Bomb bomb
+        cdef characters.Bomb bomb, bomb2
         cdef characters.Flame flame
         cdef Position position, desired_position, curr_position, target_position, agent_position, bomb_position
         cdef constants.Action action, direction
@@ -153,7 +153,7 @@ cdef class ForwardModel(object):
         # Figure out desired next position for alive agents
         alive_agents = [agent for agent in curr_agents if agent.is_alive]
         for agent in alive_agents:
-            agent.desired_position = Position(agent.position.row, agent.position.col)
+            agent.desired_position = agent.position
             agent.delayed_position = Position(-1, -1)
             agent.kicked_bomb = None
 
@@ -177,7 +177,7 @@ cdef class ForwardModel(object):
 
         # Gather desired next positions for moving bombs. Handle kicks later.
         for bomb in curr_bombs:
-            bomb.desired_position = Position(bomb.position.row, bomb.position.col)
+            bomb.desired_position = bomb.position
             bomb.delayed_position = Position(-1, -1)
             bomb.kicked_agent = None
 
@@ -238,10 +238,10 @@ cdef class ForwardModel(object):
                     bomb.desired_position = bomb.position
                     if num < 0:
                         # Crossed bomb - revert that to prior position as well.
-                        bomb = curr_bombs[-num + 1]
-                        bomb.desired_position = bomb.position
+                        bomb2 = curr_bombs[-num - 1]
+                        bomb2.desired_position = bomb2.position
                 else:
-                    crossings[r][c][i] = -num_bomb - 1
+                    crossings[r][c][i] = -(num_bomb + 1)
 
         # Deal with multiple agents or multiple bomb collisions on desired next
         # position by resetting desired position to current position for
@@ -296,7 +296,7 @@ cdef class ForwardModel(object):
                 if Position_neq(desired_position, bomb.position):
                     # Bomb moved, but agent did not. The bomb should revert
                     # and stop.
-                    bomb.delayed_position = Position(bomb.position.row, bomb.position.col)
+                    bomb.delayed_position = bomb.position
                 continue
 
             # NOTE: At this point, we have that the agent in question tried to
@@ -305,8 +305,8 @@ cdef class ForwardModel(object):
                 # If we move the agent at this point, then we risk having two
                 # agents on a square in future iterations of the loop. So we
                 # push this change to the next stage instead.
-                bomb.delayed_position = Position(bomb.position.row, bomb.position.col)
-                agent.delayed_position = Position(agent.position.row, agent.position.col)
+                bomb.delayed_position = bomb.position
+                agent.delayed_position = agent.position
                 continue
 
             # Agent moved and can kick - see if the target for the kick never had anyhing on it
@@ -323,14 +323,14 @@ cdef class ForwardModel(object):
                 # However we need to set the bomb count on the current position to zero so
                 # that the agent can stay on this position.
                 bomb_occupancy[desired_position.row][desired_position.col] = 0
-                bomb.delayed_position = Position(target_position.row, target_position.col)
+                bomb.delayed_position = target_position
                 bomb.kicked_agent = agent
                 agent.kicked_bomb = bomb
                 bomb.moving_direction = direction
                 # Bombs may still collide and we then need to reverse bomb and agent ..
             else:
-                bomb.delayed_position = Position(bomb.position.row, bomb.position.col)
-                agent.delayed_position = Position(agent.position.row, agent.position.col)
+                bomb.delayed_position = bomb.position
+                agent.delayed_position = agent.position
 
         for bomb in curr_bombs:
             if Position_neq(bomb.delayed_position, Position(-1, -1)):
@@ -625,11 +625,7 @@ cdef class ForwardModel(object):
         cdef rewards_np = np.zeros(4, dtype=np.float32)
         cdef float[:] rewards = rewards_np
 
-        if step_count > max_steps:
-            # Game is over from time. Everyone gets -1.
-            rewards[:] = -1
-            return rewards_np
-        elif game_type == constants.GameType.FFA:
+        if game_type == constants.GameType.FFA:
             alive = 0
             for agent in agents:
                 rewards[agent.agent_id] = agent.is_alive
@@ -639,6 +635,9 @@ cdef class ForwardModel(object):
                 # An agent won. Give them +1, others -1.
                 for i in range(4):
                     rewards[i] = rewards[i] * 2 - 1
+            elif step_count > max_steps:
+                # Game is over from time. Everyone gets -1.
+                rewards[:] = -1
             else:
                 # Game running: 0 for alive, -1 for dead.
                 for i in range(4):

@@ -178,7 +178,8 @@ for i in range(args.num_episodes):
         except AssertionError:
             import traceback
             traceback.print_exc()
-            input()
+            import pdb
+            pdb.set_trace()
 
         # TEST 8: verify that setting state actually works
         # set state to previous timestep and compare that JSON matches
