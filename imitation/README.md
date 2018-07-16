@@ -44,8 +44,10 @@ Self-plays tend to get stuck with agents moving back and forth or not moving at 
 
 | Model | Avg. reward | Avg. length |  Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| ***Baselines*** |
 | SimpleAgent | -0.61 | 258 | | | | |
 | StopAgent | -0.85 | 291 | | | |
+| ***Imitation*** |
 | [Linear](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/linear.h5) | -0.905 | 110 | 0.363 | -0.006 | 0.393 | 0.013 |
 | [Fully connected](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/dense.h5) | -0.94 | 157 | 0.392 | | 0.400 | |
 | [Conv](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/conv.h5) | -0.755 | 262 | 0.630 | -0.391 | 0.661 | 0.883 |

@@ -2,7 +2,7 @@
 
 In my [previous experiments](../imitation) with imitation learning I failed to learn value function. Turns out [the previous dataset](https://github.com/tambetm/pommerman-baselines/releases/tag/simple_600K) was not diverse enough - it consisted about 600K observation-value pairs, but these were collected only from 600 episodes. For example this means that the model only saw 600 different configurations of stone walls. That clearly was not enough to fit value model, but apparently was enough to fit policy model.
 
-To overcome those issues I collected [a new dataset](https://github.com/tambetm/pommerman-baselines/releases/tag/single_600K) that includes only one observation from each agent from each episode (inspired by [Expert Iteration paper](https://arxiv.org/abs/1705.08439)). This produces enough diversity to learn value function, but explained variance still remained quite low. Turns out you can get much better explained variance by using smaller discount rate (i.e. 0.9). Arguably Pommerman does not need very long-term strategy (or SimpleAgent policy just does not have long-term strategy).
+To overcome those issues I collected [a new dataset](https://github.com/tambetm/pommerman-baselines/releases/tag/single_600K) that includes only one observation from each agent from each episode (inspired by [Expert Iteration paper](https://arxiv.org/abs/1705.08439)). This produces enough diversity to learn value function, but explained variance still remained quite low. Turns out you can get much better explained variance by using smaller discount rate (i.e. 0.9). Arguably Pommerman does not need very long-term strategy or SimpleAgent policy just does not have long-term strategy.
 
 Together with [Single sample per episode 600K dataset](https://github.com/tambetm/pommerman-baselines/releases/tag/single_600K) I also release [bunch of models](https://github.com/tambetm/pommerman-baselines/releases/tag/single_600K_models) trained using this dataset. These models achieve the same action prediction accuracy as [previous models](https://github.com/tambetm/pommerman-baselines/releases/tag/simple_600K_models), but also include value prediction, which improves MCTS results considerably, as can be seen from accompanied [MCTS experiments](../mcts_value).
 
@@ -19,9 +19,9 @@ In practice it may be worth running number of processes in parallel and later co
 
 ### Datasets
 
-First set of experiments showcases the need for better dataset and lowered discount rate.
+The first set of experiments showcases the need for better dataset and lowered discount rate.
 
-| Model | Validation expl. var. | Train expl. var. |
+| Model | Validation explained variance | Train explained variance |
 | --- | ---: | ---: |
 | Conv3x32 original dataset disc0.99 | -0.190 | 0.323 |
 | Conv3x32 one-sample-per-episode dataset disc0.99 | 0.256 | 0.280 |
@@ -30,11 +30,11 @@ First set of experiments showcases the need for better dataset and lowered disco
 Observations:
  * Training model on original dataset overfits a lot, the result is practically unusable as shown by validation set explained variance.
  * Using one sample per episode produces enough diversity to make model generalize.
- * Using smaller discount rate achieves better explained variance. Whether this is property of game or policy is unclear. Or maybe just for smaller values it is easier to achieve bigger explained variance (discount 0.9 produces values close to 0 for most observations)? 
+ * Using smaller discount rate achieves even better explained variance. Whether this is property of game or policy is unclear. Or as discount 0.9 produces values close to 0 for most observations, maybe just smaller values make it easier? 
 
 ### Multitask training
 
-Second set of experiments verifies if the model performance remains the same when trained to predict both actions and values.
+The second set of experiments verifies if the model performance remains the same when trained to predict both actions and values.
 
 | Model | Avg. reward | Avg. length |  Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -46,11 +46,11 @@ Second set of experiments verifies if the model performance remains the same whe
 Observations:
  * Policy and value network can be successfully trained together and achieve performance comparable to training on only one task alone.
  * Value loss coefficient needs to be increased to match the single task performance.
- * Increased action prediction accuracy does not always mean increased average reward against three SimpleAgents. Reason unclear.
+ * Increased action prediction accuracy does not always mean increased average reward against three SimpleAgents.
 
 ### Bigger models
 
-Third set of experiments verifies if better results can be achieved with bigger models.
+The third set of experiments verifies if better results can be achieved with bigger models.
 
 | Model | Avg. reward | Avg. length | Time per step | Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -71,3 +71,5 @@ Observations:
  * Bigger model does not help much with 0.99 discount.
  * Using AlphaGoZero inspired model results in minor improvements in performance and it is unclear, if those weight over the increased time per step.
  * In the end I included couple of very simple and fast models. Links can be used to download corresponding weights.
+
+Continues with [MCTS experiments](../mcts_value).
