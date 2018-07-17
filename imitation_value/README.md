@@ -65,9 +65,12 @@ The third set of experiments verifies if better results can be achieved with big
 | [Linear disc0.9](https://github.com/tambetm/pommerman-baselines/releases/download/single_600K_models/linearvalue.h5) | -0.980 | 92 | 0.007 | 0.452 | 0.307 | 0.455 | 0.310 |
 
 Observations:
- * Conv3x256 action prediction performance matches the previous model trained on Simple 600K dataset.
+ * Conv3x256 performance against three SimpleAgents matches the previous model trained on Simple 600K dataset.
  * Bigger model does not help much with 0.99 discount.
  * Using AlphaGoZero inspired model results in minor improvements in performance and it is unclear, if those weight over the increased time per step.
- * In the end I included couple of very simple and fast models. Links can be used to download corresponding weights.
+ * Better action prediction accuracy does not mean better performance against three SimpleAgents.
+ * Validation set accuracy for Simple 600K dataset is lower, this might be caused by using different, cleaned validation set. Cleaned validation set does not include repeated actions, which might make prediction harder.
+
+In the end I included couple of very simple and fast models. Links can be used to download corresponding weights.
 
 Continues with [MCTS experiments](../mcts_value).
