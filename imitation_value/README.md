@@ -36,28 +36,26 @@ Observations:
 
 The second set of experiments verifies if the model performance remains the same when trained to predict both actions and values.
 
-| Model | Avg. reward | Avg. length |  Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Conv3x32 value only | | | | 0.594 | | 0.633 |
-| Conv3x32 policy only | -0.785 | 240 | 0.755 | | 0.783 | |
-| Conv3x32 policy and value | -0.740 | 220 | 0.753 | 0.508 | 0.776 | 0.530 |
-| Conv3x32 policy and value coef10 | -0.785 | 243 | 0.755 | 0.581 | 0.776 | 0.625 |
+| Model | Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
+| --- | ---: | ---: | ---: | ---: |
+| Conv3x32 value only | | 0.594 | | 0.633 |
+| Conv3x32 policy only | 0.755 | | 0.783 | |
+| Conv3x32 policy and value | 0.753 | 0.508 | 0.776 | 0.530 |
+| Conv3x32 policy and value coef10 | 0.755 | 0.581 | 0.776 | 0.625 |
 
 Observations:
- * Policy and value network can be successfully trained together and achieve performance comparable to training on only one task alone.
+ * Policy and value network can be successfully trained together and achieve performance comparable to training only value network.
  * Value loss coefficient needs to be increased to match the single task performance.
- * Increased action prediction accuracy does not always mean increased average reward against three SimpleAgents.
 
 ### Bigger models
 
-The third set of experiments verifies if better results can be achieved with bigger models.
+The third set of experiments verifies if better results can be achieved with bigger models. In addition to imitation training results the average reward and average episode length against three SimpleAgents is shown. 
 
 | Model | Avg. reward | Avg. length | Time per step | Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | ***Baselines*** |
 | SimpleAgent | -0.61 | 258 | | | | | |
-| StopAgent | -0.85 | 291 | | | | |
-| [Conv256](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/conv256.h5) | -0.630 | 299 | | 0.676 | | 0.705 | |
+| [Conv3x256 policy only using Simple 600K dataset](https://github.com/tambetm/pommerman-baselines/releases/download/simple_600K_models/conv256.h5) | -0.630 | 299 | | 0.676 | | 0.705 | |
 | ***Imitation with value*** |
 | [Conv3x256 disc0.9](https://github.com/tambetm/pommerman-baselines/releases/download/single_600K_models/conv3x256value.h5) | -0.630 | 274 | 0.009 | 0.758 | 0.601 | 0.776 | 0.662 |
 | [Conv3x256 disc0.99](https://github.com/tambetm/pommerman-baselines/releases/download/single_600K_models/conv3x256value_disc0.99.h5) | -0.760 | 242 | 0.009 | 0.752 | 0.264 | 0.764 | 0.291 |
