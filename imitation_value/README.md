@@ -36,7 +36,7 @@ Observations:
 
 The second set of experiments verifies if the model performance remains the same when trained to predict both actions and values.
 
-| Model | Val. acc. | Val. exp. var. | Train acc. | Train exp. var. |
+| Model | Validation accuracy | Validation explained variance | Train accuracy | Train explained variance |
 | --- | ---: | ---: | ---: | ---: |
 | Conv3x32 value only | | 0.594 | | 0.633 |
 | Conv3x32 policy only | 0.755 | | 0.783 | |
