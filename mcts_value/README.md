@@ -51,7 +51,7 @@ Observations:
  * On the other hand for very bad model (Linear) MCTS compensation is not enough.
  * It is not clear which model would win if the time limit of 100ms is considered. Better but slower AGZ model might end up worse than faster but otherwise inferior Conv3x32 model.
 
-### Alternatives to value function
+### Alternatives to learned value function
 
 Instead of using learned value function one could use Monte-Carlo rollouts (play using random actions till the end of game), rollouts using some simple policy or hand-crafted evaluation function. Here are some experiments with those ideas.
 
